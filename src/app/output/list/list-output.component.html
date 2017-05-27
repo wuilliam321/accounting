@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Outputs</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Outputs</h3>
+  <p>
+    Here you will see all the outputs
+  </p>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col col-8 offset-2>
+        <ion-list>
+          <ion-item *ngFor="let output of outputs">
+            <h2>{{output.profile_id}}</h2>
+            <p>{{output.account_id}} / {{output.payment_id}} / {{output.currency_id}}</p>
+            <ion-badge item-right color="secondary">-{{output.amount}}</ion-badge>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

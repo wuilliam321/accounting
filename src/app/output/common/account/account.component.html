@@ -1,0 +1,6 @@
+<ion-item>
+  <ion-label floating>Account</ion-label>
+  <ion-select [(ngModel)]="output.account_id">
+    <ion-option *ngFor="let account of accounts" value="{{account.id}}">{{account.name}}</ion-option>
+  </ion-select>
+</ion-item>

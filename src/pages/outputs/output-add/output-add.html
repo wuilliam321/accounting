@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Outputs</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Add a new Output</h3>
+  <p>
+    Please fill the form
+  </p>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col col-8 offset-2>
+
+        <form [formGroup]="outputAddForm"  (ngSubmit)="onSubmit()" novalidate>
+          {{ outputAddForm.value | json }}
+          <ion-list>
+
+            <ion-item>
+              <ion-label stacked>Amount</ion-label>
+              <ion-input formControlName="amount" type="number"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label floating>Account</ion-label>
+              <ion-select formControlName="account">
+                <ion-option *ngFor="let account of accounts" value="{{account.id}}">{{account.name}}</ion-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label floating>Payment Method</ion-label>
+              <ion-select formControlName="payment">
+                <ion-option *ngFor="let payment of payments" value="{{payment.id}}">{{payment.name}}</ion-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label floating>Currency</ion-label>
+              <ion-select formControlName="currency">
+                <ion-option *ngFor="let currency of currencies" value="{{currency.id}}">{{currency.name}}</ion-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <button ion-button outline block type="submit">Add Record</button>
+            </ion-item>
+
+          </ion-list>
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

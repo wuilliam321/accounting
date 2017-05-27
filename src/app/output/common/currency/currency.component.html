@@ -1,0 +1,6 @@
+<ion-item>
+  <ion-label floating>Currency</ion-label>
+  <ion-select [(ngModel)]="output.currency_id">
+    <ion-option *ngFor="let currency of currencies" value="{{currency.id}}">{{currency.name}} ({{currency.short_name}})</ion-option>
+  </ion-select>
+</ion-item>

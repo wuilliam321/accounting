@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Dashboard</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Accounting Dashboard</h3>
+
+  <p>
+    In order to add some accounting please click in the add button
+  </p>
+
+  <button ion-button secondary [navPush]="'OutputAddPage'">Add a new record</button>
+</ion-content>

@@ -1,0 +1,6 @@
+<ion-item>
+  <ion-label floating>Payment Method</ion-label>
+  <ion-select [(ngModel)]="output.payment_id">
+    <ion-option *ngFor="let payment of payments" value="{{payment.id}}">{{payment.name}}</ion-option>
+  </ion-select>
+</ion-item>

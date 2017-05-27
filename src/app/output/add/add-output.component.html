@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Outputs</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Add a new Output</h3>
+  <p>
+    Please fill the form
+  </p>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col col-8 offset-2>
+        <ion-list>
+
+          <amount-component [output]="output"></amount-component>
+          <account-component [output]="output" [accounts]="accounts"></account-component>
+          <payment-method-component [output]="output" [payments]="payments"></payment-method-component>
+          <currency-component [output]="output" [currencies]="currencies"></currency-component>
+
+          <ion-item>
+            <button ion-button outline block (click)="add(output)">Add Record</button>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
