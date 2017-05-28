@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { FirebaseListObservable } from 'angularfire2/database';
 import { AlertController } from 'ionic-angular';
 
 import { Output } from '../../../models/output';
+import { OutputProvider } from '../../../providers/output/output';
+import { AccountProvider } from '../../../providers/account/account';
+import { PaymentProvider } from '../../../providers/payment/payment';
+import { CurrencyProvider } from '../../../providers/currency/currency';
 
 /**
  * Generated class for the OutputAddPage page.
@@ -18,30 +22,28 @@ import { Output } from '../../../models/output';
   templateUrl: 'output-add.html',
 })
 export class OutputAddPage {
-  private db: AngularFireDatabase;
   outputAddForm: FormGroup;
-  output: Output;
   accounts: FirebaseListObservable<any[]>;
   payments: FirebaseListObservable<any[]>;
   currencies: FirebaseListObservable<any[]>;
-  outputs: FirebaseListObservable<any[]>;
 
   constructor(
-    db: AngularFireDatabase,
-    private fb: FormBuilder,
+    public fb: FormBuilder,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public outputProvider: OutputProvider,
+    public accountProvider: AccountProvider,
+    public paymentProvider: PaymentProvider,
+    public currencyProvider: CurrencyProvider
   ) {
-    this.db = db;
-    this.accounts = this.db.list('/accounts');
-    this.payments = this.db.list('/payments');
-    this.currencies = this.db.list('/currencies');
-    this.outputs = this.db.list('/outputs');
     this.createForm();
   }
 
   ionViewDidLoad() {
+    this.accounts = this.accountProvider.getAccounts();
+    this.payments = this.paymentProvider.getPayments();
+    this.currencies = this.currencyProvider.getCurrencies();
     console.log('ionViewDidLoad OutputAddPage');
   }
 
@@ -55,10 +57,15 @@ export class OutputAddPage {
   }
 
   onSubmit() {
-    this.output = this.prepareSaveOutput();
-    this.outputs.push(this.output);
-    this.showOutputAddedMsg();
-    this.createForm();
+    let output = this.prepareSaveOutput();
+    this.outputProvider
+      .save(output)
+      .then(() => {
+        this.showOutputAddedMsg();
+        this.createForm();
+      })
+      // TODO: make a beter handler
+      .catch(error => console.log(error));
   }
 
   prepareSaveOutput(): Output {
@@ -82,10 +89,6 @@ export class OutputAddPage {
       buttons: ['OK']
     });
     alert.present();
-  }
-
-  trackById(index) {
-    return index;
   }
 
 }
