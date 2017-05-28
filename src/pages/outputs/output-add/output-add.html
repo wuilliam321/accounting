@@ -24,13 +24,13 @@
 
             <ion-item>
               <ion-label stacked>Amount</ion-label>
-              <ion-input formControlName="amount" type="number"></ion-input>
+              <ion-input formControlName="amount" type="number" placeholder="0.00"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label floating>Account</ion-label>
               <ion-select formControlName="account">
-                <ion-option *ngFor="let account of (accounts | async); let i = index;" value="{{account.name}}">{{account.name}}</ion-option>
+                <ion-option *ngFor="let account of accounts | async" value="{{account.name}}">{{account.name}}</ion-option>
               </ion-select>
             </ion-item>
 

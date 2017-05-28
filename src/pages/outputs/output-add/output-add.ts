@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AlertController } from 'ionic-angular';
 
 import { Output } from '../../../models/output';
-import { Account } from '../../../models/account';
-import { Currency } from '../../../models/currency';
-import { Payment } from '../../../models/payment';
 
 /**
  * Generated class for the OutputAddPage page.
@@ -28,7 +26,13 @@ export class OutputAddPage {
   currencies: FirebaseListObservable<any[]>;
   outputs: FirebaseListObservable<any[]>;
 
-  constructor(db: AngularFireDatabase, private fb: FormBuilder, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    db: AngularFireDatabase,
+    private fb: FormBuilder,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public alertCtrl: AlertController
+  ) {
     this.db = db;
     this.accounts = this.db.list('/accounts');
     this.payments = this.db.list('/payments');
@@ -42,11 +46,10 @@ export class OutputAddPage {
   }
 
   createForm() {
-    console.log(this.payments.first());
     this.outputAddForm = this.fb.group({
       account: ['', Validators.required],
-      payment: '',
-      currency: '',
+      payment: 'Efectivo',
+      currency: 'Pesos ($)',
       amount: ['', Validators.required]
     });
   }
@@ -54,7 +57,8 @@ export class OutputAddPage {
   onSubmit() {
     this.output = this.prepareSaveOutput();
     this.outputs.push(this.output);
-    console.log(this.output);
+    this.showOutputAddedMsg();
+    this.createForm();
   }
 
   prepareSaveOutput(): Output {
@@ -69,6 +73,19 @@ export class OutputAddPage {
     };
 
     return outputForSave;
+  }
+
+  showOutputAddedMsg() {
+    let alert = this.alertCtrl.create({
+      title: 'Excellent!',
+      subTitle: 'Your record has been added!',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  trackById(index) {
+    return index;
   }
 
 }
