@@ -5,10 +5,10 @@
 
 export class Output {
   id?: string;
-  profile_id: string;
-  account_id: string;
-  payment_id: string;
-  currency_id: string;
+  profile: string;
+  account: string;
+  payment: string;
+  currency: string;
   amount: number;
   date: number;
   //

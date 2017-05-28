@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { Output } from '../../../models/output';
 
 /**
  * Generated class for the OutputListPage page.
@@ -13,12 +15,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'output-list.html',
 })
 export class OutputListPage {
+  private db: AngularFireDatabase;
+  outputs: FirebaseListObservable<any[]>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(db: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
+    this.db = db;
   }
 
   ionViewDidLoad() {
+    this.outputs = this.db.list('/outputs');
     console.log('ionViewDidLoad OutputListPage');
+    console.log(this.outputs);
   }
 
 }

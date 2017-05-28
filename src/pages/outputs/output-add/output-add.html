@@ -19,7 +19,7 @@
       <ion-col col-8 offset-2>
 
         <form [formGroup]="outputAddForm"  (ngSubmit)="onSubmit()" novalidate>
-          {{ outputAddForm.value | json }}
+
           <ion-list>
 
             <ion-item>
@@ -30,21 +30,21 @@
             <ion-item>
               <ion-label floating>Account</ion-label>
               <ion-select formControlName="account">
-                <ion-option *ngFor="let account of accounts" value="{{account.id}}">{{account.name}}</ion-option>
+                <ion-option *ngFor="let account of (accounts | async); let i = index;" value="{{account.name}}">{{account.name}}</ion-option>
               </ion-select>
             </ion-item>
 
             <ion-item>
               <ion-label floating>Payment Method</ion-label>
               <ion-select formControlName="payment">
-                <ion-option *ngFor="let payment of payments" value="{{payment.id}}">{{payment.name}}</ion-option>
+                <ion-option *ngFor="let payment of payments | async" value="{{payment.name}}">{{payment.name}}</ion-option>
               </ion-select>
             </ion-item>
 
             <ion-item>
               <ion-label floating>Currency</ion-label>
               <ion-select formControlName="currency">
-                <ion-option *ngFor="let currency of currencies" value="{{currency.id}}">{{currency.name}}</ion-option>
+                <ion-option *ngFor="let currency of currencies | async" value="{{currency.name}} ({{currency.short_name}})">{{currency.name}} ({{currency.short_name}})</ion-option>
               </ion-select>
             </ion-item>
 
